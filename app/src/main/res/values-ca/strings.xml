@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ShoppingList</string>
+    <string name="confirmation">Confirmació</string>
+    <string name="mess">Vol elminiar</string>
+    <string name="remove">Eliminar</string>
+    <string name="cancel">Cancelar</string>
+</resources>

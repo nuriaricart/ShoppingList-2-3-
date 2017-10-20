@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ShoppingList</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="mess">Do you want to eliminate</string>
+    <string name="remove">Eliminate</string>
+    <string name="cancel">Cancel</string>
+</resources>
