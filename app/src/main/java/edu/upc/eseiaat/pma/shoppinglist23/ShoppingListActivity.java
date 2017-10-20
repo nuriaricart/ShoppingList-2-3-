@@ -44,6 +44,14 @@ public class ShoppingListActivity extends AppCompatActivity {
         adapter = new ShoppingListAdapter(this, android.R.layout.simple_list_item_1, item_list);
         list.setAdapter(adapter);
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                item_list.get(pos).toogleChecked();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
