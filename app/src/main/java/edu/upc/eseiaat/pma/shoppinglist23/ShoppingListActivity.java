@@ -17,12 +17,13 @@ import java.util.ArrayList;
 
 public class ShoppingListActivity extends AppCompatActivity {
 
-    private ArrayList<String> item_list;
-    private ArrayAdapter<String> adapter;
+    private ArrayList<ShoppingItem> item_list;
+    private ShoppingListAdapter adapter;
 
     private ListView list;
     private Button btn_add;
     private EditText edit_item;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +35,13 @@ public class ShoppingListActivity extends AppCompatActivity {
         edit_item = (EditText) findViewById(R.id.edit_item);
 
         item_list = new ArrayList<>();
-        item_list.add("Potatoes");
-        item_list.add("Garrots");
-        item_list.add("Milk");
-        item_list.add("Cheese");
+        item_list.add(new ShoppingItem("Potatoes"));
+        item_list.add(new ShoppingItem("Garrots"));
+        item_list.add(new ShoppingItem("Milk"));
+        item_list.add(new ShoppingItem("Cheese"));
 
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, item_list);
+        adapter = new ShoppingListAdapter(this, android.R.layout.simple_list_item_1, item_list);
         list.setAdapter(adapter);
 
         btn_add.setOnClickListener(new View.OnClickListener() {
@@ -88,9 +89,10 @@ public class ShoppingListActivity extends AppCompatActivity {
     private void addItem() {
         String item_text = edit_item.getText().toString();
         if (!item_text.isEmpty()){
-            item_list.add(item_text);
+            item_list.add(new ShoppingItem(item_text));
             adapter.notifyDataSetChanged();
             edit_item.setText("");
         }
+        list.smoothScrollToPosition(item_list.size()-1);
     }
 }
