@@ -1,9 +1,11 @@
 package edu.upc.eseiaat.pma.shoppinglist23;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,10 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ShoppingListActivity extends AppCompatActivity {
+
+    private static final String FILENAME = "shopping_list.txt";
 
     private ArrayList<ShoppingItem> item_list;
     private ShoppingListAdapter adapter;
@@ -24,6 +32,32 @@ public class ShoppingListActivity extends AppCompatActivity {
     private Button btn_add;
     private EditText edit_item;
 
+
+    private void writeItemList (){
+
+        try {
+            FileOutputStream fos = openFileOutput (FILENAME, Context.MODE_PRIVATE);
+            for (int i=0; i<item_list.size(); i++){
+                ShoppingItem it = item_list.get(i);
+                String line = String.format("%s; %b\n", it.getText(), it.isChecked());
+                fos.write(line.getBytes());
+            }
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.e("nuria", "wirteItemList: FileNotFoundException");
+            Toast.makeText(this, R.string.cannot_write, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Log.e("nuria", "wirteItemList: IOException");
+            Toast.makeText(this, R.string.cannot_write, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        writeItemList();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
